@@ -1,0 +1,33 @@
+package com.reg.pro.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.reg.pro.model.Employee;
+
+public class EmployeeDao {
+public int registerEmployee(Employee employee) throws ClassNotFoundException {
+String q="INSERT INTO employee"+"(id,firstName,lastName,address,contact) values(?,?,?,?,?)";	
+int result=0;
+
+Class.forName("com.mysql.jdbc.Driver");
+try {Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employees?useSSL=false","root","root");
+PreparedStatement pstmt=con.prepareStatement(q);
+pstmt.setInt(1,1);
+pstmt.setString(2,employee.getFirstName());
+pstmt.setString(3,employee.getLastName());
+pstmt.setString(4,employee.getAddress());
+pstmt.setString(5,employee.getContact());
+System.out.println("prepared stmt");
+result=pstmt.executeUpdate();
+}catch(SQLException e) {
+	
+	e.printStackTrace();
+}
+return result;
+}
+
+	
+}
